@@ -15,6 +15,7 @@ services:
             - 80:80
         networks: 
             - frontend
+            
     db: #Banco mysql
         container_name: mysql_serve
         image: mysql
@@ -31,6 +32,7 @@ services:
             - 6033:3306
         networks: 
             - frontend
+            
     phpmyadmin: #Gerenciador do banco
         image: phpmyadmin/phpmyadmin # Imagem a ser utulizada
         depends_on: #Força esse serviço a utilizar o serviço do banco (db)
@@ -43,5 +45,6 @@ services:
             - "8080:80"
         networks: 
             - frontend
+            
 networks: 
-    - frontend
+  frontend:
