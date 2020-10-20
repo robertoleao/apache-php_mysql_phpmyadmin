@@ -1,19 +1,18 @@
-version: '3.1'
+version: '3.1' #Define a versão do docker-compose.yml link de versões https://docs.docker.com/compose/compose-file/compose-versioning/#version-3
 
-services:
-
+services: #Define o início do bloco de serviços que serão definidos
     web: #Serviço do apache_php
-        build: 
+        build: #Informa que esse serviço será criado não a partir de uma imagem pronta, mas que será necessário construir sua imagem antes de sua execução
             context: ./php
-            dockerfile: dockerfile #Arquivo de configuração do apache
-        container_name: php_serve
+            dockerfile: dockerfile #Arquivo de configuração da build
+        container_name: php_serve #Nome do container
         depends_on: #Força esse serviço a utilizar o serviço do banco (db)
-            - db
-        volumes: 
+            - db #Nome do serviço do banco
+        volumes: #Define o caminho do volume 
             - ./php:/var/www/html/
-        ports: 
+        ports: #Define qual porta do contêiner será exposta no Docker host
             - 80:80
-        networks: 
+        networks: #Define a rede de cominicação do container
             - frontend
             
     db: #Banco mysql
@@ -26,9 +25,9 @@ services:
             MYSQL_DATABASE: test_db
             MYSQL_USER: roberto
             MYSQL_PASSWORD: roberto
-        volumes:
+        volumes: #Define o caminho do volume 
             - ./volume-mysql:/var/lib/mysql
-        ports: 
+        ports: #Define qual porta do contêiner será exposta no Docker host
             - 6033:3306
         networks: 
             - frontend
@@ -39,11 +38,11 @@ services:
             - db
         environment:
             MYSQL_ROOT_PASSWORD: root
-        volumes:
+        volumes: #Define o caminho do volume 
             - ./uploads.ini:/usr/local/etc/php/conf.d/php-phpmyadmin.ini
-        ports:
+        ports: #Define qual porta do contêiner será exposta no Docker host
             - "8080:80"
-        networks: 
+        networks: #Define a rede de cominicação do container
             - frontend
             
 networks: 
